@@ -62,8 +62,10 @@ def ehco_message(message):
         msg = bot.reply_to(message, "Введите интересующий год (1958-2021)")
         bot.register_next_step_handler(msg, change_year)
 
-
-bot.polling(none_stop=True)
+try:
+    bot.polling(none_stop=True)
+except Exception:
+    bot.polling(none_stop=True)
 
 # пилот дня последнего вэ
 # личный зачет \/

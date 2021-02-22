@@ -1,4 +1,5 @@
-API_TOKEN = 'token'
+import os
+API_TOKEN = os.getenv('BOT_TOKEN')
 
 help_message = """
 Приветствую! Данный бот предназначен для получения информации о результатах в F1
