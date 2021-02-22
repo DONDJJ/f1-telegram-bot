@@ -10,8 +10,14 @@ cur_year = 2021
 
 def change_year(message):
     global cur_year
-    cur_year = message.text
-    bot.send_message(message.chat.id, "Текущий год - {}".format(cur_year))
+    try:
+        cur_year = int(message.text)
+        if not 1957<cur_year<2022:
+            raise ValueError
+        bot.send_message(message.chat.id, "Текущий год - {}".format(cur_year))
+    except ValueError:
+        msg = bot.reply_to(message, "Введите число от 1958 до 2021!")
+        bot.register_next_step_handler(msg, change_year)
 
 
 def get_GP(message, href_list):
