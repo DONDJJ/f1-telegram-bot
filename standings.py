@@ -15,7 +15,7 @@ def standings_check(request, year=2021):
         second_names = BsObj.findAll("span", {"class": "hide-for-mobile"})
         teams = BsObj.findAll("a", {"class": "grey semi-bold uppercase ArchiveLink"})
         points = BsObj.findAll("td", {"class": "dark bold"})
-
+        return_string += f"Личный зачет для {year} года: \n"
         for r, i, j, k, l in zip(range(1, 22), first_names, second_names, teams, points):
             full_name_driver = i.getText() + ' ' + j.getText()
             full_name_team = ' '.join(k.getText().split(' ')[0:2])
@@ -24,6 +24,7 @@ def standings_check(request, year=2021):
     elif request == 'team':
         teams = BsObj.findAll("a", {"class": "dark bold uppercase ArchiveLink"})
         points = BsObj.findAll("td", {"class": "dark bold"})
+        return_string += f"Кубок конструкторов для {year} года: \n"
         for r, i, j in zip(range(1, 22), teams, points):
             full_name_team = ' '.join(i.getText().split(' ')[0:2])
             return_string += str(r) + '. ' + full_name_team + ' (' + j.getText() + ')' + '\n'
@@ -35,7 +36,7 @@ def standings_check(request, year=2021):
             href_list.append(i['href'])
         dates = BsObj.findAll('td', {'class': 'dark hide-for-mobile'})
         winners = BsObj.findAll('span', {'class': 'hide-for-mobile'})
-
+        return_string += f"Список Гран-при для {year} года: \n"
         for r, i, j, k in zip(range(1, 22), dates, winners, gran_prix):
             return_string += str(r) + '. ' + k.getText().strip().ljust(17) + i.getText().ljust(13) + j.getText().ljust(
                 13) + '\n'
@@ -51,6 +52,7 @@ def standings_check(request, year=2021):
         months = BsObj.select('span.month-wrapper')
 
         names = BsObj.select('div.event-place')
+        return_string += f"Календарь для {year} года: \n"
         for start, finish, name, month, event in zip(starts, finishes, names, months, events):
             if event.getText().startswith('RO'):
                 return_string += name.getText() + '  ' + start.getText() + '-' + finish.getText() + " " + month.getText() + '\n'
