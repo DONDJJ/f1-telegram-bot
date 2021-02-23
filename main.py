@@ -8,7 +8,7 @@ bot = telebot.TeleBot(API_TOKEN)
 cur_year = 2021
 conn = psycopg2.connect(database="d97s5gpdjg8t90", user="phupsufrdcjudk", password="98c0bc223faafaf9747674e3d6d70a7679dfe9ddb530c4adfb8263ca02e77e62", host="ec2-54-90-55-211.compute-1.amazonaws.com", port=5432)
 cursor = conn.cursor()
-create_table(cursor, conn)
+
 
 def change_year(message):
 
@@ -18,7 +18,7 @@ def change_year(message):
         cur_year = int(message.text)
         if not 1957<cur_year<2022:
             raise ValueError
-        change_chosen_year(message.chat.id, cur_year)
+        change_chosen_year(message.chat.id, cur_year, cursor, conn)
         bot.send_message(message.chat.id, "Текущий год - {}".format(cur_year))
     except ValueError:
         msg = bot.reply_to(message, "Введите число от 1958 до 2021!")
